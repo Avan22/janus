@@ -1,6 +1,6 @@
 PQC Baseline
-Algorithms: Kyber for key encapsulation, Dilithium for signatures, SHA-3 or Blake3 for hash.
-TLS: OQS OpenSSL hybrid ciphers with crypto agility enabled.
-Data at rest: envelope encryption Kyber to AES GCM, signed manifests with Dilithium.
-Keys: HSM or Vault, split custody, quarterly rotation, emergency revoke SOP.
-Audit: append-only logs, daily hash anchoring.
+Use Kyber for key encapsulation, Dilithium for signatures, SHA-3/Blake3 for hashing.
+TLS via OQS-OpenSSL hybrids when available; maintain crypto-agility.
+Data at rest: envelope encryption (symmetric key wrapped by Kyber); signed manifests with Dilithium.
+Keys: stored in a local vault until HSM budget; quarterly rotation plan written; emergency revoke procedure documented.
+Audit: append-only logs; daily hash anchoring to a public chain when budget permits.
