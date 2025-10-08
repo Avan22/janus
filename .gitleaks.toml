@@ -1,0 +1,9 @@
+title = "janus gitleaks config"
+
+[allowlist]
+
+regexes = [
+  'contact@janus\.local',
+  'you@example\.com',
+  '\+00-000000000'
+]
