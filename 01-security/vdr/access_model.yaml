@@ -1,0 +1,12 @@
+attributes:
+  deal_id: "<uuid>"
+  side: ["buy","sell","counsel","auditor"]
+  sensitivity: ["public","confidential","mnpi"]
+policies:
+  - name: buyer_core
+    match: { side: "buy", sensitivity: ["confidential","mnpi"] }
+    allow: ["view","annotate"]
+    deny:  ["download"]
+  - name: seller_view
+    match: { side: "sell", sensitivity: ["confidential"] }
+    allow: ["view"]

@@ -1,0 +1,16 @@
+entities:
+  - name: issuer
+    keys: [issuer_id]
+  - name: instrument
+    keys: [isin]
+features:
+  - name: emissions_intensity
+    entity: issuer
+    dtype: float
+    versioned: true
+  - name: hazard_score
+    entity: issuer
+    dtype: float
+    versioned: true
+lineage:
+  standard: OpenLineage

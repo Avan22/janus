@@ -1,0 +1,9 @@
+roles:
+  - name: advisor
+    permissions: [view_dashboard, view_docs, propose_terms]
+  - name: risk
+    permissions: [view_dashboard, approve_limits, veto_trades]
+  - name: legal
+    permissions: [view_docs, manage_policies]
+  - name: client
+    permissions: [view_selected, comment]
