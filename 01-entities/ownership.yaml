@@ -1,0 +1,40 @@
+entities:
+  holdco:
+    name: Janus Holdings, Inc.
+    type: corp
+    jurisdiction: DE
+  opco:
+    name: Janus Advisory LLC
+    type: llc
+    jurisdiction: DE
+  im:
+    name: Janus Investment Management LLC
+    type: llc
+    jurisdiction: DE
+  fund:
+    name: Janus Fund I LP
+    type: lp
+    jurisdiction: DE
+ownership:
+  - parent: holdco
+    child: opco
+    pct: 100
+  - parent: holdco
+    child: im
+    pct: 100
+  - parent: im
+    child: fund
+    pct: 1         
+  - parent: external_investors
+    child: fund
+    pct: 99
+licenses:
+  - licensor: holdco
+    licensee: opco
+    scope: internal use of IP, non-exclusive, revocable
+  - licensor: holdco
+    licensee: im
+    scope: internal use of IP for portfolio mgmt, non-exclusive, revocable
+walls:
+  - between: [opco, im]
+    rule: default-deny; need-to-know JIT elevation; immutable audit
