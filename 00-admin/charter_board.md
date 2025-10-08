@@ -1,7 +1,7 @@
 Board Charter
-Purpose: oversight of strategy, risk, compliance, capital allocation.
-Composition: independent director(s), CEO, CRO, GC.
-Meetings: monthly, ad-hoc for incidents.
-Reserved Matters: capital raises, new businesses, conflicts policy changes.
-Committees: IC, MRC, InfoSec, Conflicts.
-Records: minutes with decision IDs, stored in immutable log.
+Purpose: strategy, risk, compliance, capital allocation.
+Composition: sole director Avaneendra Trivedi until independent director appointment.
+Meetings: monthly written resolutions; ad-hoc for incidents.
+Reserved Matters: capital raises, new business lines, conflicts policy changes.
+Committees: Investment, Model Risk, InfoSec, Conflicts (solo quorum until additional members appointed).
+Records: decisions recorded as Decision-ID YYYYMMDD-n and stored in immutable git history.
