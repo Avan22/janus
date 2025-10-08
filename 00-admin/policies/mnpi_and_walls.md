@@ -1,5 +1,5 @@
 MNPI and Chinese Walls Policy
-Segregation: advisory vs fund domains; default-deny RBAC.
-Access: need-to-know; ticketed JIT elevation; immutable audit.
-Trading: restricted lists, no-trade windows, surveillance triggers.
-Breach Handling: immediate trading halt, investigation, regulator notice per incident response runbook.
+Segregation: advisory and fund domains stored in separate folders and access groups.
+Access Control: least-privilege; no cross-pollination of deal materials.
+Trading: maintain a restricted list; no-trade windows during diligence and through public disclosure.
+Breach Handling: halt trading, investigate, document, notify counterparties and regulators as required; see incident runbook.

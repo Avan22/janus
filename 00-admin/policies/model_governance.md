@@ -1,5 +1,5 @@
 Model Governance Policy
-Documentation: purpose, data lineage, performance, limitations.
-Validation: independent tests, backtests, stress tests, fairness checks where applicable.
-Approval: MRC sign-off prior to production.
+Documentation: purpose, data lineage, training/eval sets, metrics, limits.
+Validation: backtests, stress tests, sensitivity, fairness where applicable.
+Approval: Model-Risk sign-off before client reliance.
 Monitoring: drift thresholds, alerting, retrain cadence, retirement criteria.
