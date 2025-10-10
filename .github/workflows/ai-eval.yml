@@ -1,0 +1,36 @@
+name: ai-eval
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest numpy pandas scikit-learn openai
+
+      - name: Run AI Evaluation
+        run: |
+          python 05-ai/eval/run_eval.py --config 05-ai/eval/config.yml
+
+      - name: Upload metrics artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-eval-metrics
+          path: 05-ai/eval/results/
