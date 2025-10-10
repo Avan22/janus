@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>JANUS Console</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{--bg:#0b0c0f;--card:#151821;--muted:#a7adbb;--accent:#5ef3c1;--text:#e9edf3;--chip:#232838}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:14px/1.5 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
+    h1{font-size:22px;margin:0 0 4px}
+    .sub{color:var(--muted);font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 2px 18px rgba(0,0,0,.35)}
+    h2{font-size:16px;margin:0 0 14px}
+    .row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+    input[type="file"]{color:var(--muted)}
+    button{border:0;border-radius:10px;padding:8px 12px;background:var(--accent);color:#0b0c0f;font-weight:600;cursor:pointer}
+    button.ghost{background:var(--chip);color:var(--text)}
+    .result{background:var(--chip);border-radius:10px;padding:10px;min-height:42px;white-space:pre-wrap}
+    .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+    .excerpt{background:#1d2130;border-radius:10px;padding:10px;margin-top:8px}
+    .footer{margin-top:24px;color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <h1>JANUS Console</h1>
+    <div class="sub">Contract signals and portfolio toy optimizer</div>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>Contract Analyzer</h2>
+      <div class="row">
+        <input id="file" type="file" accept=".txt,.pdf" />
+        <button id="analyze">Analyze</button>
+        <button id="download-csv" class="ghost">Export CSV</button>
+      </div>
+      <div id="coc-out" class="result mono"></div>
+    </section>
+
+    <section class="card">
+      <h2>Portfolio Optimizer</h2>
+      <div class="row">
+        <button id="run-qubo">Run Optimizer</button>
+      </div>
+      <div id="qubo-out" class="result mono"></div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">Local demo</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    $("analyze").onclick = async () => {
+      const f = $("file").files[0];
+      if (!f) return;
+      const fd = new FormData();
+      fd.append("file", f);
+      const res = await fetch("/api/extract", { method: "POST", body: fd });
+      const data = await res.json();
+      const out = $("coc-out");
+      out.innerHTML = "";
+      if (data.error) { out.textContent = data.error; return; }
+      const hdr = document.createElement("div");
+      hdr.textContent = "findings: " + data.count;
+      out.appendChild(hdr);
+      data.findings.slice(0, 10).forEach((it) => {
+        const b = document.createElement("div");
+        b.className = "excerpt";
+        b.textContent = it.excerpt;
+        out.appendChild(b);
+      });
+    };
+
+    $("download-csv").onclick = async () => {
+      const f = $("file").files[0];
+      if (!f) return;
+      const fd = new FormData();
+      fd.append("file", f);
+      const res = await fetch("/api/extract.csv", { method: "POST", body: fd });
+      if (!res.ok) { alert("Export failed"); return; }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "findings.csv";
+      document.body.appendChild(a); a.click();
+      URL.revokeObjectURL(url); a.remove();
+    };
+
+    $("run-qubo").onclick = async () => {
+      const res = await fetch("/api/qubo");
+      const data = await res.json();
+      const out = $("qubo-out");
+      out.innerHTML = "";
+      out.appendChild(Object.assign(document.createElement("div"), {textContent: "score: " + data.score.toFixed(6)}));
+      out.appendChild(Object.assign(document.createElement("div"), {textContent: "selection: [" + data.selection.join(", ") + "]"}));
+      out.appendChild(Object.assign(document.createElement("div"), {textContent: "expected_return: " + data.expected_return.toFixed(5) + "  risk: " + data.risk.toFixed(5)}));
+    };
+  </script>
+</body>
+</html>
