@@ -14,3 +14,4 @@ secrets*.json
 *.key
 *.pem
 .env
+00-admin/regulatory/founder.yaml
