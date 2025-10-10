@@ -1,7 +1,2 @@
-Client Pack v0.1
-Contents:
-- capabilities_onepager.md
-- NDA template
-- Engagement letter template
-- Security policy summary
-- Operating status statement
+# Client Pack (stub)
+This directory will contain the one-pager, NDA, EL, and security summary.
